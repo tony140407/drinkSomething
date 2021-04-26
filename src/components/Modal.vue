@@ -3,7 +3,7 @@
     <div class="modal">
       <section class="modal-navbar">
         <h2>訂購飲料</h2>
-        <button @click="changeOrderModal">
+        <button @click="closeModal()">
           <i class="fas fa-times fa-2x"></i>
         </button>
       </section>
@@ -78,14 +78,8 @@
       </section>
       <section class="modal-footer">
         <button class="order-btn cancel" @click="closeModal()">取消</button>
-        <button
-          class="order-btn determine"
-          @click="
-            changeOrderModal(order);
-            closeModal();
-          "
-        >
-          確定修改
+        <button class="order-btn determine" @click="clickDetermine()">
+          確定
         </button>
       </section>
     </div>
@@ -96,24 +90,17 @@
 import { ref, computed, defineProps, defineEmit, toRefs, reactive } from 'vue';
 const props = defineProps({
   modifyTemplate: Object,
+  isNewOrder: Boolean,
 });
-const emit = defineEmit(['closeModal', 'changeOrderModal']);
+const { modifyTemplate, isNewOrder } = toRefs(props);
+const emit = defineEmit(['closeModal', 'changeOrderModal', 'addOrderModal']);
 function closeModal() {
   emit('closeModal');
 }
-const { modifyTemplate } = toRefs(props);
+console.log(`isNewOrder ${isNewOrder.value}`);
 const order = reactive({ ...modifyTemplate.value });
 order.totalPrice = computed(() => order.price[order.size] * order.num);
-// if (!order.num) {
-//   // 初始化
-//   order.num = 1;
-//   order.size = '';
-//   order.sweet = '';
-//   order.ice = '';
-//   order.totalPrice = totalPrice;
-//   order.personName = '';
-//   order.note = '';
-// }
+
 const sizeList = ['M', 'L'];
 const sweetList = ['無糖', '微糖', '半糖', '少糖', '全糖'];
 const iceList = ['去冰', '少冰', '正常', '多冰'];
@@ -121,9 +108,20 @@ const iceList = ['去冰', '少冰', '正常', '多冰'];
 const changeOrderModal = (modifyObjct) => {
   emit('changeOrderModal', modifyObjct);
 };
-const addOrderList = () => {
-  // changeOrderModal(); // 關閉Modal
-  // store.dispatch('addOrderList', order);
+const addOrderModal = (newObjct) => {
+  emit('addOrderModal', newObjct);
+};
+const clickDetermine = () => {
+  // 若是新訂單
+  if (isNewOrder.value) {
+    const id = order.length;
+    order.id = id;
+    addOrderModal(order);
+    closeModal();
+    return;
+  }
+  changeOrderModal(order);
+  closeModal();
 };
 </script>
 <style lang="scss" scoped>

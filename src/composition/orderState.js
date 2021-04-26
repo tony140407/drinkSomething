@@ -2,10 +2,11 @@ import { reactive } from 'vue';
 export const orders = () => {
   const orderList = reactive([
     {
+      id: 0,
       name: '可可',
       personName: 'aaa',
       num: 1,
-      totalPrice: 123,
+      totalPrice: 50,
       note: 'hihi',
       size: 'L',
       ice: '去冰',
@@ -15,10 +16,11 @@ export const orders = () => {
       price: { M: 35, L: 50 },
     },
     {
+      id: 1,
       name: '可可',
       personName: 'aaa',
       num: 1,
-      totalPrice: 123,
+      totalPrice: 50,
       note: 'hihi',
       size: 'L',
       ice: '去冰',
@@ -28,11 +30,23 @@ export const orders = () => {
       price: { M: 35, L: 50 },
     },
   ]);
-  const modifyOrder = (index, item) => {
+  const addOrder = (item) => {
+    orderList.push(item);
+  };
+  const findElementIndex = (findId) => {
+    const index = orderList.findIndex((element) => element.id === findId);
+    return index;
+  };
+  const modifyOrder = (id, item) => {
+    const index = findElementIndex(id);
+    console.log(`id ${id}`);
+    console.log(`index ${index}`);
+    console.log(orderList[index]);
     orderList.splice(index, 1, item);
   };
-  const deleteOrder = (index) => {
+  const deleteOrder = (id) => {
+    const index = findElementIndex(id);
     orderList.splice(index, 1);
   };
-  return { orderList, deleteOrder, modifyOrder };
+  return { orderList, deleteOrder, modifyOrder, addOrder, findElementIndex };
 };

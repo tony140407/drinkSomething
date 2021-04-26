@@ -2,6 +2,7 @@ import { reactive, ref } from 'vue';
 export const modalState = () => {
   const isShow = ref(false);
   const modifyTemplate = ref({
+    id: null,
     name: '',
     personName: '',
     num: 1,
@@ -15,15 +16,12 @@ export const modalState = () => {
     price: { M: 35, L: 50 },
   });
   const openModal = (data) => {
-    console.log(data);
     if (data) {
       modifyTemplate.value = data;
-      //   console.log(data);
     }
     isShow.value = true;
-
-    // return data;
   };
+  const isNewOrder = ref(false);
 
-  return { isShow, openModal, modifyTemplate };
+  return { isShow, openModal, modifyTemplate, isNewOrder };
 };
