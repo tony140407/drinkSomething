@@ -88,14 +88,22 @@
 
 <script setup>
 import { ref, computed, defineProps, defineEmit, toRefs, reactive } from 'vue';
+// import { modalState } from '../composition/modalState.js';
+// const newModifyTemplate = modalState().modifyTemplate;
 const props = defineProps({
   modifyTemplate: Object,
   isNewOrder: Boolean,
 });
 const { modifyTemplate, isNewOrder } = toRefs(props);
-const emit = defineEmit(['closeModal', 'changeOrderModal', 'addOrderModal']);
+const emit = defineEmit([
+  'closeModal',
+  'changeOrderModal',
+  'addOrderModal',
+  'changeIsNewOrder',
+]);
 function closeModal() {
   emit('closeModal');
+  changeIsNewOrder();
 }
 console.log(`isNewOrder ${isNewOrder.value}`);
 const order = reactive({ ...modifyTemplate.value });
@@ -111,16 +119,21 @@ const changeOrderModal = (modifyObjct) => {
 const addOrderModal = (newObjct) => {
   emit('addOrderModal', newObjct);
 };
+const changeIsNewOrder = () => {
+  if (isNewOrder.value) {
+    emit('changeIsNewOrder');
+  }
+};
 const clickDetermine = () => {
   // 若是新訂單
   if (isNewOrder.value) {
-    const id = order.length;
+    const id = Date.now();
     order.id = id;
     addOrderModal(order);
-    closeModal();
-    return;
+  } else {
+    changeOrderModal(order);
   }
-  changeOrderModal(order);
+
   closeModal();
 };
 </script>

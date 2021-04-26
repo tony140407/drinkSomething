@@ -44,6 +44,7 @@
     @closeModal="closeFn"
     @changeOrderModal="changeOrderList"
     @addOrderModal="addOrderList"
+    @changeIsNewOrder="changeIsNewOrder"
   />
 </template>
 
@@ -59,10 +60,19 @@ const {
   addOrder,
   findElementIndex,
 } = orders();
-const { isShow, modifyTemplate, openModal, isNewOrder } = modalState();
+const {
+  isShow,
+  modifyTemplate,
+  openModal,
+  isNewOrder,
+  modifyTemplateInit,
+} = modalState();
 const openModifyModalIndex = ref(null);
 function closeFn() {
   isShow.value = false;
+}
+function changeIsNewOrder() {
+  isNewOrder.value = false;
 }
 const addOrderModalShow = () => {
   isNewOrder.value = true;
@@ -77,8 +87,10 @@ const changeOrderList = (template) => {
 };
 
 const openModifyModal = (id) => {
+  console.log(orderList);
   if (id !== 0 && !id) {
     console.log('沒有id');
+    modifyTemplateInit();
     openModal();
     return;
   }

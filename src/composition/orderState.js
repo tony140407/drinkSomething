@@ -2,7 +2,7 @@ import { reactive } from 'vue';
 export const orders = () => {
   const orderList = reactive([
     {
-      id: 0,
+      id: 1619471596178,
       name: '可可',
       personName: 'aaa',
       num: 1,
@@ -16,7 +16,7 @@ export const orders = () => {
       price: { M: 35, L: 50 },
     },
     {
-      id: 1,
+      id: 1619471618613,
       name: '可可',
       personName: 'aaa',
       num: 1,
@@ -39,9 +39,7 @@ export const orders = () => {
   };
   const modifyOrder = (id, item) => {
     const index = findElementIndex(id);
-    console.log(`id ${id}`);
-    console.log(`index ${index}`);
-    console.log(orderList[index]);
+
     orderList.splice(index, 1, item);
   };
   const deleteOrder = (id) => {

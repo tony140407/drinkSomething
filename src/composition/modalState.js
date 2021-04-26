@@ -15,6 +15,22 @@ export const modalState = () => {
       'https://foodtracer.taipei.gov.tw/Backend/upload/product/28722339/28722339_40.jpg',
     price: { M: 35, L: 50 },
   });
+  const modifyTemplateInit = () => {
+    modifyTemplate.value = {
+      id: null,
+      name: '',
+      personName: '',
+      num: 1,
+      totalPrice: 0,
+      note: '',
+      size: '',
+      ice: '',
+      sweet: '',
+      img:
+        'https://foodtracer.taipei.gov.tw/Backend/upload/product/28722339/28722339_40.jpg',
+      price: { M: 35, L: 50 },
+    };
+  };
   const openModal = (data) => {
     if (data) {
       modifyTemplate.value = data;
@@ -23,5 +39,5 @@ export const modalState = () => {
   };
   const isNewOrder = ref(false);
 
-  return { isShow, openModal, modifyTemplate, isNewOrder };
+  return { isShow, openModal, modifyTemplate, isNewOrder, modifyTemplateInit };
 };
