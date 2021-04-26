@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="border_bottom" v-for="(eachOrder, index) in orderList">
+        <tr class="border_bottom" v-for="(eachOrder, index) in copyOrderList">
           <td>{{ eachOrder.personName }}</td>
           <td>{{ eachOrder.num }}</td>
           <td>{{ eachOrder.totalPrice }}</td>
@@ -71,6 +71,37 @@ const openModifyModalIndex = ref(null);
 function closeFn() {
   isShow.value = false;
 }
+// const copyOrderList = ref({ ...orderList });
+const sortMode = (mode, list) => {
+  if (mode == 'totalPrice') {
+    list.sort((a, b) => {
+      return a.totalPrice - b.totalPrice;
+    });
+  }
+};
+const copyOrderList = computed(() => {
+  let list = { ...orderList };
+  let sortArr = [];
+  let outPutList = {};
+  for (let eachObj in list) {
+    sortArr.push(list[eachObj]);
+  }
+  console.log(sortArr);
+  sortMode('totalPrice', sortArr);
+  console.log(sortArr);
+  sortArr.forEach((each, index) => {
+    console.log(each);
+    outPutList[index] = each;
+  });
+
+  return outPutList;
+});
+
+// watch(orderList, (currentValue) => {
+//   copyOrderList.value = { ...currentValue };
+//   sortMode('name');
+// });
+
 function changeIsNewOrder() {
   isNewOrder.value = false;
 }
