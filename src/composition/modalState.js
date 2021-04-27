@@ -3,7 +3,7 @@ export const modalState = () => {
   const isShow = ref(false);
   const modifyTemplate = ref({
     id: null,
-    name: '',
+    name: '可可',
     personName: '',
     num: 1,
     totalPrice: 0,
@@ -18,7 +18,7 @@ export const modalState = () => {
   const modifyTemplateInit = () => {
     modifyTemplate.value = {
       id: null,
-      name: '',
+      name: '可可',
       personName: '',
       num: 1,
       totalPrice: 0,

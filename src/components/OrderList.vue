@@ -8,9 +8,11 @@
     <table class="table mx-auto">
       <thead class="table-thead">
         <tr>
-          <th>訂購人</th>
-          <th>杯數</th>
-          <th>價錢</th>
+          <th>
+            訂購人 <button @click="sortTypeChange('personName')"></button>
+          </th>
+          <th>杯數<button @click="sortTypeChange('num')"></button></th>
+          <th>價錢<button @click="sortTypeChange('totalPrice')"></button></th>
           <th>附註</th>
 
           <th>修改</th>
@@ -72,35 +74,55 @@ function closeFn() {
   isShow.value = false;
 }
 // const copyOrderList = ref({ ...orderList });
-const sortMode = (mode, list) => {
-  if (mode == 'totalPrice') {
+const sortMethod = (type, isAscending, list) => {
+  if (type == 'personName') {
+    let ascendingNum = 1;
+    if (isAscending == false) {
+      ascendingNum = -1;
+    }
+    list.sort((a, b) =>
+      a[type] > b[type] ? ascendingNum : b[type] > a[type] ? -ascendingNum : 0
+    );
+    return;
+  }
+  if (isAscending == true) {
     list.sort((a, b) => {
-      return a.totalPrice - b.totalPrice;
+      console.log(a[type] - b[type]);
+      return a[type] - b[type];
+    });
+  }
+  if (isAscending == false) {
+    list.sort((a, b) => {
+      return b[type] - a[type];
     });
   }
 };
+const sortType = ref({ type: '', isAscending: false });
+const sortTypeChange = (type) => {
+  sortType.value.type = type;
+  sortType.value.isAscending = !sortType.value.isAscending;
+};
 const copyOrderList = computed(() => {
   let list = { ...orderList };
+  if (!sortType.value.type) {
+    return list;
+  }
+  console.log(' mode', sortType.value.type, sortType.value.isAscending);
   let sortArr = [];
   let outPutList = {};
   for (let eachObj in list) {
     sortArr.push(list[eachObj]);
   }
   console.log(sortArr);
-  sortMode('totalPrice', sortArr);
+  sortMethod(sortType.value.type, sortType.value.isAscending, sortArr);
+  console.log(sortType.value.type, sortType.value.isAscending);
   console.log(sortArr);
   sortArr.forEach((each, index) => {
-    console.log(each);
     outPutList[index] = each;
   });
 
   return outPutList;
 });
-
-// watch(orderList, (currentValue) => {
-//   copyOrderList.value = { ...currentValue };
-//   sortMode('name');
-// });
 
 function changeIsNewOrder() {
   isNewOrder.value = false;
