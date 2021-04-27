@@ -1,7 +1,6 @@
 <template>
   <div class="container mx-auto">
     <h1>Let's drink something</h1>
-    <!-- <Cards /> -->
     <button class="btn addOrder mb-l" @click="addOrderModalShow">
       新增訂單
     </button>
@@ -51,7 +50,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue';
+import { ref, computed } from 'vue';
 import Modal from './Modal.vue';
 import { orders } from '../composition/orderState.js';
 import { modalState } from '../composition/modalState.js';
@@ -73,8 +72,14 @@ const openModifyModalIndex = ref(null);
 function closeFn() {
   isShow.value = false;
 }
-// const copyOrderList = ref({ ...orderList });
+
+const sortType = ref({ type: '', isAscending: false });
+const sortTypeChange = (type) => {
+  sortType.value.type = type;
+  sortType.value.isAscending = !sortType.value.isAscending;
+};
 const sortMethod = (type, isAscending, list) => {
+  // 文字 sort特別處理
   if (type == 'personName') {
     let ascendingNum = 1;
     if (isAscending == false) {
@@ -87,7 +92,6 @@ const sortMethod = (type, isAscending, list) => {
   }
   if (isAscending == true) {
     list.sort((a, b) => {
-      console.log(a[type] - b[type]);
       return a[type] - b[type];
     });
   }
@@ -97,30 +101,21 @@ const sortMethod = (type, isAscending, list) => {
     });
   }
 };
-const sortType = ref({ type: '', isAscending: false });
-const sortTypeChange = (type) => {
-  sortType.value.type = type;
-  sortType.value.isAscending = !sortType.value.isAscending;
-};
 const copyOrderList = computed(() => {
   let list = { ...orderList };
   if (!sortType.value.type) {
     return list;
   }
-  console.log(' mode', sortType.value.type, sortType.value.isAscending);
+  //  拆解 sort後 再回傳
   let sortArr = [];
   let outPutList = {};
   for (let eachObj in list) {
     sortArr.push(list[eachObj]);
   }
-  console.log(sortArr);
   sortMethod(sortType.value.type, sortType.value.isAscending, sortArr);
-  console.log(sortType.value.type, sortType.value.isAscending);
-  console.log(sortArr);
   sortArr.forEach((each, index) => {
     outPutList[index] = each;
   });
-
   return outPutList;
 });
 
@@ -140,18 +135,16 @@ const changeOrderList = (template) => {
 };
 
 const openModifyModal = (id) => {
-  console.log(orderList);
   if (id !== 0 && !id) {
     console.log('沒有id');
     modifyTemplateInit();
     openModal();
     return;
   }
-  console.log(id);
+
   currentOrderId.value = id;
   const index = findElementIndex(id);
   openModal(orderList[index]);
-  // openModifyModalIndex.value = index;
 };
 const noteLengthLimit = (note) => {
   if (!note) return;

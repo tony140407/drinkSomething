@@ -87,9 +87,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, defineEmit, toRefs, reactive } from 'vue';
-// import { modalState } from '../composition/modalState.js';
-// const newModifyTemplate = modalState().modifyTemplate;
+import { computed, defineProps, defineEmit, toRefs, reactive } from 'vue';
 const props = defineProps({
   modifyTemplate: Object,
   isNewOrder: Boolean,
