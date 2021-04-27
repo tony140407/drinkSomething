@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="container mx-auto">
     <h1>Let's drink something</h1>
     <button class="btn addOrder mb-l" @click="addOrderModalShow">
@@ -8,10 +8,10 @@
       <thead class="table-thead">
         <tr>
           <th>
-            訂購人 <button @click="sortTypeChange('personName')"></button>
+            訂購人 <button @click="sortTypeChange('personName')"><i class="fas fa-sort"></i></button>
           </th>
-          <th>杯數<button @click="sortTypeChange('num')"></button></th>
-          <th>價錢<button @click="sortTypeChange('totalPrice')"></button></th>
+          <th>杯數<button @click="sortTypeChange('num')"><i class="fas fa-sort"></i></button></th>
+          <th>價錢<button @click="sortTypeChange('totalPrice')"><i class="fas fa-sort"></i></button></th>
           <th>附註</th>
 
           <th>修改</th>
