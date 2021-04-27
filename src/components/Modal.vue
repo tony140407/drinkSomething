@@ -3,7 +3,7 @@
     <div class="modal">
       <section class="modal-navbar">
         <h2>訂購飲料</h2>
-        <button @click="closeModal()">
+        <button class="modal-closeBtn" @click="closeModal()">
           <i class="fas fa-times fa-2x"></i>
         </button>
       </section>
@@ -165,6 +165,17 @@ const clickDetermine = () => {
         display: inline-block;
       }
     }
+    &-closeBtn {
+      color: tomato;
+      background-color: #fff;
+      padding: 5px 20px;
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      cursor: pointer;
+    }
     &-body {
       display: flex;
       justify-content: space-around;
@@ -235,6 +246,16 @@ const clickDetermine = () => {
         background-color: #20c997;
         border: 2px solid transparent;
         color: #fff;
+      }
+    }
+  }
+}
+@media screen and(max-width:992px) {
+  .modal-bg {
+    .modal {
+      width: 80%;
+      &-body {
+        display: block;
       }
     }
   }

@@ -172,6 +172,16 @@ const noteLengthLimit = (note) => {
 .container {
   width: 1200px;
 }
+@media screen and(max-width:992px) {
+  .container {
+    width: 768px;
+  }
+}
+@media screen and(max-width:576px) {
+  .container {
+    width: 350px;
+  }
+}
 .btn {
   padding: 5px 20px;
   text-align: center;
