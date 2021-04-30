@@ -4,9 +4,9 @@ export const orders = () => {
     {
       id: 1619471596178,
       name: '可可',
-      personName: 'aaa',
-      num: 1,
-      totalPrice: 50,
+      personName: 'Blue',
+      num: 2,
+      totalPrice: 100,
       note: 'hihi',
       size: 'L',
       ice: '去冰',
@@ -18,11 +18,11 @@ export const orders = () => {
     {
       id: 1619471618613,
       name: '可可',
-      personName: 'aaa',
+      personName: 'Tony',
       num: 1,
-      totalPrice: 50,
+      totalPrice: 35,
       note: 'hihi',
-      size: 'L',
+      size: 'M',
       ice: '去冰',
       sweet: '無糖',
       img:
