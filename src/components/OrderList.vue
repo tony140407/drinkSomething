@@ -54,6 +54,7 @@ import { ref, computed } from 'vue';
 import Modal from './Modal.vue';
 import { orders } from '../composition/orderState.js';
 import { modalState } from '../composition/modalState.js';
+import { sortType, sortTypeChange, sortMethod } from '../composition/sort.js'
 const {
   orderList,
   modifyOrder,
@@ -73,34 +74,6 @@ function closeFn() {
   isShow.value = false;
 }
 
-const sortType = ref({ type: '', isAscending: false });
-const sortTypeChange = (type) => {
-  sortType.value.type = type;
-  sortType.value.isAscending = !sortType.value.isAscending;
-};
-const sortMethod = (type, isAscending, list) => {
-  // 文字 sort特別處理
-  if (type == 'personName') {
-    let ascendingNum = 1;
-    if (isAscending == false) {
-      ascendingNum = -1;
-    }
-    list.sort((a, b) =>
-      a[type] > b[type] ? ascendingNum : b[type] > a[type] ? -ascendingNum : 0
-    );
-    return;
-  }
-  if (isAscending == true) {
-    list.sort((a, b) => {
-      return a[type] - b[type];
-    });
-  }
-  if (isAscending == false) {
-    list.sort((a, b) => {
-      return b[type] - a[type];
-    });
-  }
-};
 const copyOrderList = computed(() => {
   let list = { ...orderList };
   if (!sortType.value.type) {
