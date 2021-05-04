@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="border_bottom" v-for="(eachOrder, index) in copyOrderList">
+        <tr class="border_bottom" v-for="eachOrder in copyOrderList" :key='eachOrder.id'>
           <td>{{ eachOrder.personName }}</td>
           <td>{{ eachOrder.num }}</td>
           <td>{{ eachOrder.totalPrice }}</td>

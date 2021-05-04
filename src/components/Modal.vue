@@ -24,6 +24,7 @@
           <div class="order-size mb-s">
             <button
               v-for="size in sizeList"
+              :key='size'
               class="order-btn"
               :class="{ 'order-btn-active': order.size == size }"
               @click="order.size = size"
@@ -34,6 +35,7 @@
           <div class="order-sweet mb-s">
             <button
               v-for="sweet in sweetList"
+              :key='sweet'
               class="order-btn"
               :class="{ 'order-btn-active': order.sweet == sweet }"
               @click="order.sweet = sweet"
@@ -44,6 +46,7 @@
           <div class="order-ice mb-s">
             <button
               v-for="ice in iceList"
+              :key="ice"
               class="order-btn"
               :class="{ 'order-btn-active': order.ice == ice }"
               @click="order.ice = ice"
