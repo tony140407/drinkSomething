@@ -54,7 +54,7 @@ import { ref, computed } from 'vue';
 import Modal from './Modal.vue';
 import { orders } from '../composition/orderState.js';
 import { modalState } from '../composition/modalState.js';
-import { sortType, sortTypeChange, sortMethod } from '../composition/sort.js'
+import { sortType, sortTypeChange, sortMethod, listSort } from '../composition/sort.js'
 const {
   orderList,
   modifyOrder,
@@ -79,17 +79,9 @@ const copyOrderList = computed(() => {
   if (!sortType.value.type) {
     return list;
   }
-  //  拆解 sort後 再回傳
-  let sortArr = [];
-  let outPutList = {};
-  for (let eachObj in list) {
-    sortArr.push(list[eachObj]);
-  }
-  sortMethod(sortType.value.type, sortType.value.isAscending, sortArr);
-  sortArr.forEach((each, index) => {
-    outPutList[index] = each;
-  });
+  const {outPutList} = listSort(list)
   return outPutList;
+
 });
 
 function changeIsNewOrder() {
@@ -109,7 +101,7 @@ const changeOrderList = (template) => {
 
 const openModifyModal = (id) => {
   if (id !== 0 && !id) {
-    console.log('沒有id');
+    console.log('new product!!');
     modifyTemplateInit();
     openModal();
     return;

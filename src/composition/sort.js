@@ -27,3 +27,17 @@ export const sortMethod = (type, isAscending, list) => {
     });
   }
 };
+
+export const listSort = (list) => {
+  //  拆解 sort後 再回傳
+  let sortArr = [];
+  let outPutList = {};
+  for (let eachObj in list) {
+    sortArr.push(list[eachObj]);
+  }
+  sortMethod(sortType.value.type, sortType.value.isAscending, sortArr);
+  sortArr.forEach((each, index) => {
+    outPutList[index] = each;
+  });
+  return {outPutList};
+}
