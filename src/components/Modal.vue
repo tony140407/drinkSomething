@@ -3,7 +3,7 @@
     <div class="modal">
       <section class="modal-navbar">
         <h2>訂購飲料</h2>
-        <button class="modal-closeBtn" @click="closeModal()">
+        <button class="modal-closeBtn" @click="closeModal(isNewOrder.value)">
           <i class="fas fa-times fa-2x"></i>
         </button>
       </section>
@@ -77,7 +77,9 @@
         </div>
       </section>
       <section class="modal-footer">
-        <button class="order-btn cancel" @click="closeModal()">取消</button>
+        <button class="order-btn cancel" @click="closeModal(isNewOrder.value)">
+          取消
+        </button>
         <button class="order-btn determine" @click="clickDetermine()">
           確定
         </button>
@@ -88,40 +90,35 @@
 
 <script setup>
 import { computed, defineProps, defineEmit, toRefs, reactive } from 'vue';
+import {
+  emitInit,
+  closeModal,
+  changeOrderModal,
+  changeIsNewOrder,
+  addOrderModal,
+} from '../composition/modalEmitFunction';
 const props = defineProps({
   modifyTemplate: Object,
   isNewOrder: Boolean,
 });
 const { modifyTemplate, isNewOrder } = toRefs(props);
+
 const emit = defineEmit([
   'closeModal',
   'changeOrderModal',
   'addOrderModal',
   'changeIsNewOrder',
 ]);
-function closeModal() {
-  emit('closeModal');
-  changeIsNewOrder();
-}
-console.log(`isNewOrder ${isNewOrder.value}`);
-const order = reactive({ ...modifyTemplate.value });
-order.totalPrice = computed(() => order.price[order.size] * order.num);
+emitInit(emit); // init modalEmitFunction.js 的 emit 使其有目標
 
+// Render 選項
 const sizeList = ['M', 'L'];
 const sweetList = ['無糖', '微糖', '半糖', '少糖', '全糖'];
 const iceList = ['去冰', '少冰', '正常', '多冰'];
 
-const changeOrderModal = (modifyObjct) => {
-  emit('changeOrderModal', modifyObjct);
-};
-const addOrderModal = (newObjct) => {
-  emit('addOrderModal', newObjct);
-};
-const changeIsNewOrder = () => {
-  if (isNewOrder.value) {
-    emit('changeIsNewOrder');
-  }
-};
+const order = reactive({ ...modifyTemplate.value });
+order.totalPrice = computed(() => order.price[order.size] * order.num);
+
 const clickDetermine = () => {
   // 若是新訂單
   if (isNewOrder.value) {
@@ -132,7 +129,7 @@ const clickDetermine = () => {
     changeOrderModal(order);
   }
 
-  closeModal();
+  closeModal(isNewOrder.value);
 };
 </script>
 <style lang="scss" scoped>
